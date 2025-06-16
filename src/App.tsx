@@ -1,10 +1,17 @@
 import './styles/theme.css';
 import './styles/global.css';
+import { Heading } from './components/Heading';
+import { TimerIcon } from 'lucide-react';
 
 export function App() {
 	return (
 		<>
-			<h1>Welcome to PomoAPP!</h1>
+			<Heading>
+				Welcome to PomoAPP!
+				<button>
+					<TimerIcon />
+				</button>
+			</Heading>
 			<p>
 				This is a simple Pomodoro timer application built with React. It
 				helps you manage your time effectively by breaking work into
