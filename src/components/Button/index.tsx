@@ -8,9 +8,6 @@ type ButtonProps = {
 export function Button({ icon, color = 'green', ...props }: ButtonProps) {
 	return (
 		<>
-			<button {...props} className={`${styles.button} ${styles['red']}`}>
-				{icon}
-			</button>
 			<button {...props} className={`${styles.button} ${styles[color]}`}>
 				{icon}
 			</button>
