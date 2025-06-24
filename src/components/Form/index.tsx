@@ -4,8 +4,12 @@ import { Cycles } from '../Cycles';
 import { Input } from '../Input';
 
 export function Form() {
+	function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+		event.preventDefault();
+	}
+
 	return (
-		<form action='' className='form'>
+		<form onSubmit={handleSubmit} action='' className='form'>
 			<div className='form-row'>
 				<Input
 					labelText=''
