@@ -6,12 +6,14 @@ import { useRef } from 'react';
 import type { TaskModel } from '../../models/TaskModel';
 import { useTaskContext } from '../../contexts/TaskContext/useTaskContext';
 import { getNextCycle } from '../../utils/getNextCycle';
+import { getNextCycleType } from '../../utils/getNextCycleType';
 
 export function Form() {
 	const { state, setState } = useTaskContext();
 	const taskNameInput = useRef<HTMLInputElement>(null);
 
 	const nextCycle = getNextCycle(state.currentCycle);
+	const nextCycleType = getNextCycleType(nextCycle);
 
 	function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
 		event.preventDefault();
@@ -32,8 +34,8 @@ export function Form() {
 			createdAt: Date.now(),
 			completedAt: null,
 			interruptedAt: null,
-			duration: 1,
-			type: 'workTime',
+			duration: state.config[nextCycleType],
+			type: nextCycleType,
 		};
 
 		const secondsRemaining = newTask.duration * 60;
@@ -42,6 +44,7 @@ export function Form() {
 			return {
 				...prevState,
 				config: { ...prevState.config },
+				activeTask: newTask,
 				currentCycle: nextCycle,
 				secondsRemaining,
 				formattedSecondsRemaining: '00:00',
