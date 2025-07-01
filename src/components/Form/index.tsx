@@ -71,9 +71,11 @@ export function Form() {
 				<p>Lorem ipsum dolor sit amet.</p>
 			</div>
 
-			<div className='form-row'>
-				<Cycles />
-			</div>
+			{state.currentCycle > 0 && (
+				<div className='form-row'>
+					<Cycles />
+				</div>
+			)}
 
 			<div className='form-row'>
 				<Button icon={<PlayCircleIcon />} />
