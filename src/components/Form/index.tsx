@@ -55,6 +55,20 @@ export function Form() {
 		});
 	}
 
+	function handleInterruptTask(
+		e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+	) {
+		e.preventDefault();
+		setState(prevState => {
+			return {
+				...prevState,
+				activeTask: null,
+				secondsRemaining: 0,
+				formattedSecondsRemaining: '00:00',
+			};
+		});
+	}
+
 	return (
 		<form onSubmit={handleSubmit} action='' className='form'>
 			<div className='form-row'>
@@ -85,6 +99,7 @@ export function Form() {
 						title='Iniciar nova tarefa'
 						type='submit'
 						icon={<PlayCircleIcon />}
+						key='play_button'
 					/>
 				) : (
 					<Button
@@ -93,6 +108,8 @@ export function Form() {
 						type='button'
 						color='red'
 						icon={<StopCircleIcon />}
+						onClick={handleInterruptTask}
+						key='stop_button'
 					/>
 				)}
 			</div>
