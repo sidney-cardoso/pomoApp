@@ -8,6 +8,7 @@ import { useTaskContext } from '../../contexts/TaskContext/useTaskContext';
 import { getNextCycle } from '../../utils/getNextCycle';
 import { getNextCycleType } from '../../utils/getNextCycleType';
 import { TaskActionTypes } from '../../contexts/TaskContext/taskActions';
+import { Tips } from '../Tips';
 
 export function Form() {
 	const { state, dispatch } = useTaskContext();
@@ -16,7 +17,7 @@ export function Form() {
 	const nextCycle = getNextCycle(state.currentCycle);
 	const nextCycleType = getNextCycleType(nextCycle);
 
-	function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+	function handleCreateNewTask(event: React.FormEvent<HTMLFormElement>) {
 		event.preventDefault();
 
 		if (taskNameInput.current === null) return;
@@ -50,7 +51,7 @@ export function Form() {
 	}
 
 	return (
-		<form onSubmit={handleSubmit} action='' className='form'>
+		<form onSubmit={handleCreateNewTask} action='' className='form'>
 			<div className='form-row'>
 				<Input
 					labelText=''
@@ -63,7 +64,7 @@ export function Form() {
 			</div>
 
 			<div className='form-row'>
-				<p>Lorem ipsum dolor sit amet.</p>
+				<Tips />
 			</div>
 
 			{state.currentCycle > 0 && (
