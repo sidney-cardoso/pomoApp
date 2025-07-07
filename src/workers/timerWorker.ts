@@ -3,6 +3,8 @@ let isRunning = false;
 self.onmessage = event => {
 	if (isRunning) return;
 
+	isRunning = true;
+
 	const state = event.data;
 	const { activeTask, secondsRemaining } = state;
 

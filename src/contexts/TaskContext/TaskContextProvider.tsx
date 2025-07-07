@@ -3,6 +3,7 @@ import { TaskContext } from './TaskContext';
 import { initialTaskState } from './initialTaskState';
 import { taskReducer } from './taskReducer';
 import { TimerWorkerManager } from '../../workers/timeWorkerManager';
+import { TaskActionTypes } from './taskActions';
 
 type TaskContextProviderProps = {
 	children: React.ReactNode;
@@ -17,24 +18,30 @@ export function TaskContextProvider({ children }: TaskContextProviderProps) {
 		const countdownSeconds = e.data;
 
 		console.log(countdownSeconds);
-		if (countdownSeconds === 0) {
-			console.log('Task completa');
 
-			state.activeTask = null;
+		if (countdownSeconds <= 0) {
+			dispatch({
+				type: TaskActionTypes.COMPLETE_TASK,
+			});
 
 			worker.terminate();
+		} else {
+			dispatch({
+				type: TaskActionTypes.COUNT_DOWN,
+				payload: { secondsRemaining: countdownSeconds },
+			});
 		}
 	});
 
 	useEffect(() => {
+		console.log(state);
+
 		if (!state.activeTask) {
 			console.log('Worker terminado por falta de task ativa');
 			worker.terminate();
 		}
 
-		if (state.activeTask) {
-			worker.postMessage(state);
-		}
+		worker.postMessage(state);
 	}, [worker, state]);
 
 	return (
