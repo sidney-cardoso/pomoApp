@@ -46,7 +46,7 @@ export function Menu() {
 				<HouseIcon />
 			</Link>
 			<Link
-				to='#'
+				to='/history'
 				className={styles['link-menu']}
 				aria-label='Ver Histórico'
 				title='Ver Histórico'
@@ -54,7 +54,7 @@ export function Menu() {
 				<HistoryIcon />
 			</Link>
 			<Link
-				to='#'
+				to='/settings'
 				className={styles['link-menu']}
 				aria-label='Ir para Configurações'
 				title='Ir para Configurações'
@@ -62,7 +62,7 @@ export function Menu() {
 				<SettingsIcon />
 			</Link>
 			<Link
-				to='#'
+				to='/'
 				className={styles['link-menu']}
 				aria-label='Mudar Tema'
 				title='Mudar Tema'
