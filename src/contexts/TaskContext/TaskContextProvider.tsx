@@ -43,6 +43,12 @@ export function TaskContextProvider({ children }: TaskContextProviderProps) {
 			worker.terminate();
 		}
 
+		document.title = ` ${
+			state.activeTask
+				? `${state.activeTask.name} - ${state.formattedSecondsRemaining} `
+				: 'Chronos'
+		}`;
+
 		worker.postMessage(state);
 	}, [worker, state]);
 
