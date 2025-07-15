@@ -7,8 +7,10 @@ import { TrashIcon } from 'lucide-react';
 import '../../styles/global.css';
 import '../../styles/theme.css';
 import styles from './styles.module.css';
+import { useTaskContext } from '../../contexts/TaskContext/useTaskContext';
 
 export function History() {
+	const { state } = useTaskContext();
 	return (
 		<Template>
 			<Container>
@@ -37,13 +39,15 @@ export function History() {
 							</tr>
 						</thead>
 						<tbody>
-							{Array.from({ length: 10 }).map((_, index) => (
-								<tr key={index}>
-									<td>Tarefa {index + 1}</td>
-									<td>25min</td>
-									<td>14/07/2025</td>
-									<td>Completa</td>
-									<td>Foco</td>
+							{state.tasks.map(task => (
+								<tr key={task.id}>
+									<td>{task.name}</td>
+									<td>{task.duration}min</td>
+									<td>
+										{new Date(task.createdAt).toISOString()}
+									</td>
+									<td>{task.interruptedAt}</td>
+									<td>{task.type}</td>
 								</tr>
 							))}
 						</tbody>
