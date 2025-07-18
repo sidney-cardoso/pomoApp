@@ -34,3 +34,11 @@
 	padding: 1.6rem;
 	text-align: left;
 }
+
+.th-sort {
+	cursor: pointer;
+	transition: all 0.1s ease-in-out;
+}
+.th-sort:hover {
+	filter: brightness(80%);
+}
