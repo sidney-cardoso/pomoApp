@@ -8,16 +8,17 @@ import { formatDate } from '../../utils/formatDate';
 import { getTaskStatus } from '../../utils/getTaskStatus';
 import { TrashIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { showMessage } from '../../adapters/showMessage';
+import { TaskActionTypes } from '../../contexts/TaskContext/taskActions';
 import { type SortTaskOptions, sortTasks } from '../../utils/sortTasks';
 
 import '../../styles/global.css';
 import '../../styles/theme.css';
 import styles from './styles.module.css';
-import { showMessage } from '../../adapters/showMessage';
-import { TaskActionTypes } from '../../contexts/TaskContext/taskActions';
 
 export function History() {
 	const { state, dispatch } = useTaskContext();
+	const [confirmClearHistory, setConfirmClearHistory] = useState(false);
 
 	const hasTasks = state.tasks.length > 0;
 
@@ -42,6 +43,13 @@ export function History() {
 		}));
 	}, [state.tasks]);
 
+	useEffect(() => {
+		if (!confirmClearHistory) return;
+		setConfirmClearHistory(false);
+
+		dispatch({ type: TaskActionTypes.RESET_STATE });
+	}, [confirmClearHistory, dispatch]);
+
 	function handlesSortTasks({ field }: Pick<SortTaskOptions, 'field'>) {
 		const newDirection =
 			sortTaskOptions.direction === 'desc' ? 'asc' : 'desc';
@@ -58,10 +66,10 @@ export function History() {
 	}
 
 	function handleClearHistory() {
-		if (!confirm('Tem certeza que deseja apagar o histórico?')) return;
-
-		dispatch({ type: TaskActionTypes.RESET_STATE });
-		showMessage.info('Histórico apagado.');
+		showMessage.dismiss();
+		showMessage.confirm('Apagar histórico?', confirmation => {
+			setConfirmClearHistory(confirmation);
+		});
 	}
 
 	return (
